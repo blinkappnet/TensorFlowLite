@@ -14,9 +14,11 @@
 
 import TensorFlowLiteC
 
-/// TensorFlow Lite runtime values.
-public enum Runtime {
-  /// A string describing the semantic versioning information for the runtime. Is an empty string if
-  /// the version could not be determined.
-  public static var version: String { return TfLiteVersion().map(String.init) ?? "" }
+/// A delegate that the `Interpreter` uses to perform TensorFlow Lite model computations.
+public protocol Delegate: AnyObject {
+  /// The `TfLiteDelegate` C pointer type.
+  typealias CDelegate = UnsafeMutablePointer<TfLiteDelegate>
+
+  /// The delegate that performs model computations.
+  var cDelegate: CDelegate { get }
 }

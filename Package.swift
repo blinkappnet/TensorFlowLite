@@ -5,19 +5,25 @@ import PackageDescription
 
 let package = Package(
     name: "TensorFlowLite",
+    platforms: [.iOS(.v12)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "TensorFlowLite",
-            targets: ["TensorFlowLite"]),
+            targets: [
+                "TensorFlowLiteC",
+                "TensorFlowLite"
+            ]
+        ),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "TensorFlowLite"),
-        .testTarget(
-            name: "TensorFlowLiteTests",
-            dependencies: ["TensorFlowLite"]),
+            name: "TensorFlowLite",
+            linkerSettings: [.linkedLibrary("c++")]
+        ),
+        .binaryTarget(
+            name: "TensorFlowLiteC",
+            url: "https://github.com/blinkappnet/TensorFlowLite/releases/download/0.1.0/TensorFlowLiteC.xcframework.zip",
+            checksum: "244557e3b4c7612a074956d9d041eb4691e47a12520829ef6130c414c0b0423e"
+        )
     ]
 )
